@@ -3,7 +3,6 @@ import json
 from datetime import datetime
 
 
-
 class Etl:
     def __init__(self):
         self.json_file = ''
@@ -33,14 +32,8 @@ class Etl:
                     else:
                         dictionary[key] = values
 
-<<<<<<< HEAD
-=======
         return self.read_json
 
-# if dictionary == dictionary['price']:
-#     value = int(value)
-
->>>>>>> 7cc52d10e4dc2add2e46dbd108da609b64e59e96
     def transform_data(self):
         for dictionary in self.read_json:
             for key in dictionary:
@@ -57,8 +50,6 @@ class Etl:
         self.new_columns = self.read_json
         return self.new_columns
 
-<<<<<<< HEAD
-=======
     def change_data_format(self):
         # Iterate through self.new_columns with parameter book
         for book in self.new_columns:
@@ -70,7 +61,6 @@ class Etl:
             book['published_date'] = date
         return self.new_columns
 
->>>>>>> 7cc52d10e4dc2add2e46dbd108da609b64e59e96
     def json_to_csv(self):
         for x in self.read_json[0].keys():
             self.csv_format[0].append(x)
@@ -80,10 +70,9 @@ class Etl:
         return self.csv_format
 
     def load_csv(self):
-        with open(self.csv_format, "w",  newline='', encoding='utf8') as new_file:
+        with open(self.new_csv_file, "w", newline="", encoding='utf-8') as new_file:
             csv_writer = csv.writer(new_file)
-            csv_writer.writerows(self.new_csv_file)
-        pass
+            csv_writer.writerows(self.csv_format)
 
     def main(self, old_file_name):
         self.json_file = old_file_name
@@ -91,13 +80,9 @@ class Etl:
         self.remove_data_types()
         self.transform_data()
         self.remove_bestseller_column()
-<<<<<<< HEAD
         self.json_to_csv()
         self.load_csv()
-=======
         self.change_data_format()
-
->>>>>>> 7cc52d10e4dc2add2e46dbd108da609b64e59e96
 
 
 instance = Etl()
