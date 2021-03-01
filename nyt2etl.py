@@ -1,4 +1,5 @@
-import csv, json
+import csv
+import json
 
 
 class Etl:
@@ -16,7 +17,18 @@ class Etl:
         return self.read_json
 
     def remove_data_types(self):
-
+        keys = list(self.read_json[0].keys())
+        print(keys)
+        for dictionary in self.read_json:
+            for key in keys:
+                values = dictionary[key]
+                if isinstance(values, dict):
+                    values = list(values.values())[0]
+                    if isinstance(values, dict):
+                        values = list(values.values())[0]
+                        dictionary[key] = values
+                    else:
+                        dictionary[key] = values
         return self.read_json
 
     def remove_bestseller_column(self):
@@ -38,13 +50,15 @@ class Etl:
 
         pass
 
-    def main(self, old_file_name):
 
+    def main(self, old_file_name):
         self.json_file = old_file_name
         self.extract()
-        print(self.remove_bestseller_column())
+        self.remove_data_types()
+        self.remove_bestseller_column()
         pass
 
 
 instance = Etl()
 instance.main('nyt2.json')
+
