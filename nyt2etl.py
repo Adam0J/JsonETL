@@ -3,7 +3,6 @@ import json
 from datetime import datetime
 
 
-
 class Etl:
     def __init__(self):
         self.json_file = ""
@@ -21,7 +20,6 @@ class Etl:
 
     def remove_data_types(self):
         keys = list(self.read_json[0].keys())
-
         for dictionary in self.read_json:
             for key in keys:
                 values = dictionary[key]
@@ -37,7 +35,6 @@ class Etl:
 
 # if dictionary == dictionary['price']:
 #     value = int(value)
-
 
     def transform_data(self):
         for dictionary in self.read_json:
@@ -78,7 +75,6 @@ class Etl:
         with open(self.new_csv_file, "w",newline="", encoding='utf-8') as new_file:
             csv_writer = csv.writer(new_file)
             csv_writer.writerows(self.csv_format)
-
 
     def main(self, old_file_name, new_csv_file_name):
         self.json_file = old_file_name
