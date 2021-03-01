@@ -1,4 +1,5 @@
-import csv, json
+import csv
+import json
 
 
 class Etl:
@@ -10,11 +11,31 @@ class Etl:
         self.csv_format = [[]]
 
     def extract(self):
-
+        with open(self.json_file, encoding='utf-8') as file:
+            for line in file:
+                self.read_json.append(json.loads(line))
+            print(self.read_json)
         return self.read_json
 
     def remove_data_types(self):
+        for dictionary in self.read_json:
+            if dictionary == 'price':
+                for x in dictionary.values():
+                    if type(x) == dict:
+                         = int(x.values())
 
+
+        # need to return as specific data types - int, float, date
+
+            # if dictionary == dictionary['price']:
+            #     for key in dictionary:
+            #         if key["$numberInt"] is int:
+            #             key["$numberInt"] = int(key["$numberInt"])
+
+            # if key is <data type> and assign
+            # then remove the key
+
+            # "price": {"$numberInt": "27"}
         return self.read_json
 
     def remove_bestseller_column(self):
@@ -33,7 +54,8 @@ class Etl:
 
         pass
 
-    def main(self):
-
+    def main(self, json_file):
+        e = Etl()
+        e.extract()
+        e.remove_data_types()
         pass
-
