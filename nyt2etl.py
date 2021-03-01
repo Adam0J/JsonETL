@@ -1,5 +1,7 @@
 import csv
 import json
+from datetime import datetime
+
 
 
 class Etl:
@@ -9,6 +11,7 @@ class Etl:
         self.read_json = []
         self.new_columns = ''
         self.csv_format = [[]]
+        self.datetime = ''
 
     def extract(self):
         with open(self.json_file, encoding='utf-8') as file:
@@ -29,9 +32,8 @@ class Etl:
                         dictionary[key] = values
                     else:
                         dictionary[key] = values
-        return self.read_json
 
-        # need to return as specific data types - int, float, date
+        return self.read_json
 
 # if dictionary == dictionary['price']:
 #     value = int(value)
@@ -53,7 +55,14 @@ class Etl:
         return self.new_columns
 
     def change_data_format(self):
-
+        # Iterate through self.new_columns with parameter book
+        for book in self.new_columns:
+            old_format = int(book['published_date'])
+            # Convert old date format into YYYY-mm-DD format
+            date = datetime.fromtimestamp(old_format / 1e3)
+            date = date.strftime("%Y-%m-%d")
+            # Return date into book
+            book['published_date'] = date
         return self.new_columns
 
     def json_to_csv(self):
@@ -70,7 +79,9 @@ class Etl:
         self.extract()
         self.remove_data_types()
         self.remove_bestseller_column()
-        pass
+         self.change_data_format()
+
+
 
 
 instance = Etl()
