@@ -18,24 +18,18 @@ class Etl:
         return self.read_json
 
     def remove_data_types(self):
+        keys = list(self.read_json[0].keys())
+        print(keys)
         for dictionary in self.read_json:
-            if dictionary == 'price':
-                for x in dictionary.values():
-                    if type(x) == dict:
-                         = int(x.values())
-
-
-        # need to return as specific data types - int, float, date
-
-            # if dictionary == dictionary['price']:
-            #     for key in dictionary:
-            #         if key["$numberInt"] is int:
-            #             key["$numberInt"] = int(key["$numberInt"])
-
-            # if key is <data type> and assign
-            # then remove the key
-
-            # "price": {"$numberInt": "27"}
+            for key in keys:
+                values = dictionary[key]
+                if isinstance(values, dict):
+                    values = list(values.values())[0]
+                    if isinstance(values, dict):
+                        values = list(values.values())[0]
+                        dictionary[key] = values
+                    else:
+                        dictionary[key] = values
         return self.read_json
 
     def remove_bestseller_column(self):
@@ -54,7 +48,7 @@ class Etl:
 
         pass
 
-    def main(self, json_file):
+    def main(self):
         e = Etl()
         e.extract()
         e.remove_data_types()
