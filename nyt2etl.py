@@ -1,12 +1,21 @@
 import csv
 import json
 from datetime import datetime
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 
 
 class Etl:
     def __init__(self):
+<<<<<<< HEAD
         self.json_file = "nyt2.json"
         self.new_csv_file = 'nyt2.csv'
+=======
+        self.json_file = ""
+        self.new_csv_file = ''
+>>>>>>> main
         self.read_json = []
         self.new_columns = ''
         self.csv_format = [[]]
@@ -31,7 +40,23 @@ class Etl:
                         dictionary[key] = values
                     else:
                         dictionary[key] = values
+<<<<<<< HEAD
+=======
 
+        return self.read_json
+
+# if dictionary == dictionary['price']:
+#     value = int(value)
+>>>>>>> main
+
+
+    def transform_data(self):
+        for dictionary in self.read_json:
+            for key in dictionary:
+                if key == 'price':
+                    dictionary[key] = float(dictionary[key])
+                elif key == 'rank' or key == 'rank_last_week' or key == 'weeks_on_list' or key == 'published_date':
+                    dictionary[key] = int(dictionary[key])
         return self.read_json
 
     # if dictionary == dictionary['price']:
@@ -69,6 +94,7 @@ class Etl:
             self.csv_format[0].append(x)
         for dictionary in self.read_json:
             self.csv_format.append(list(dictionary.values))
+<<<<<<< HEAD
 
         return self.csv_format
 
@@ -79,19 +105,42 @@ class Etl:
 
     def main(self, old_file_name):
         self.json_file = old_file_name
+=======
+            
+        return self.csv_format
+
+    def load_csv(self):
+        with open(self.new_csv_file, "w",newline="", encoding='utf-8') as new_file:
+            csv_writer = csv.writer(new_file)
+            csv_writer.writerows(self.csv_format)
+
+    def main(self, old_file_name, new_csv_file_name):
+        self.json_file = old_file_name
+        self.new_csv_file = new_csv_file_name
+>>>>>>> main
         self.extract()
         self.remove_data_types()
         self.transform_data()
         self.remove_bestseller_column()
         self.change_data_format()
+<<<<<<< HEAD
+=======
+        self.json_to_csv()
+        self.load_csv()
+
+>>>>>>> main
 
 
 instance = Etl()
 instance.main('nyt2.json')
 
+<<<<<<< HEAD
 test = Etl()
 test.extract()
 test.remove_data_types()
 test.transform_data()
 test.json_to_csv()
 test.load_csv()
+=======
+
+>>>>>>> main
