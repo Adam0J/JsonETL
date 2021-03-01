@@ -31,11 +31,6 @@ class Etl:
                         dictionary[key] = values
         return self.read_json
 
-        # need to return as specific data types - int, float, date
-
-# if dictionary == dictionary['price']:
-#     value = int(value)
-
     def transform_data(self):
         for dictionary in self.read_json:
             for key in dictionary:
@@ -52,29 +47,28 @@ class Etl:
         self.new_columns = self.read_json
         return self.new_columns
 
-    def change_data_format(self):
-
-        return self.new_columns
-
     def json_to_csv(self):
         for x in self.read_json[0].keys():
             self.csv_format[0].append(x)
 
         for dictionary in self.read_json:
-            self.csv_format.append(list(dictionary.values))
+            self.csv_format.append(list(dictionary.values()))
         return self.csv_format
 
     def load_csv(self):
-
+        with open(self.csv_format, "w",  newline='', encoding='utf8') as new_file:
+            csv_writer = csv.writer(new_file)
+            csv_writer.writerows(self.new_csv_file)
         pass
 
     def main(self, old_file_name):
         self.json_file = old_file_name
         self.extract()
         self.remove_data_types()
+        self.transform_data()
         self.remove_bestseller_column()
-
-        pass
+        self.json_to_csv()
+        self.load_csv()
 
 
 instance = Etl()
