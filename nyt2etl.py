@@ -74,17 +74,17 @@ class Etl:
             csv_writer = csv.writer(new_file)
             csv_writer.writerows(self.csv_format)
 
-    def main(self, old_file_name):
+    def main(self, old_file_name, new_csv_file_name):
         self.json_file = old_file_name
         self.extract()
         self.remove_data_types()
         self.transform_data()
         self.remove_bestseller_column()
+        self.change_data_format()
         self.json_to_csv()
         self.load_csv()
-        self.change_data_format()
 
 
 instance = Etl()
-instance.main('nyt2.json')
+instance.main('nyt2.json', 'csv_from_json')
 
