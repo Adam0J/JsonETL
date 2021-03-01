@@ -6,8 +6,8 @@ from datetime import datetime
 
 class Etl:
     def __init__(self):
-        self.json_file = "nyt2.json"
-        self.new_csv_file = 'nyt2.csv'
+        self.json_file = ""
+        self.new_csv_file = ''
         self.read_json = []
         self.new_columns = ''
         self.csv_format = [[]]
@@ -79,22 +79,19 @@ class Etl:
             csv_writer = csv.writer(new_file)
             csv_writer.writerows(self.csv_format)
 
-    def main(self, old_file_name):
+    def main(self, old_file_name, new_csv_file_name):
         self.json_file = old_file_name
+        self.new_csv_file = new_csv_file_name
         self.extract()
         self.remove_data_types()
         self.transform_data()
         self.remove_bestseller_column()
         self.change_data_format()
+        self.json_to_csv()
+        self.load_csv()
 
 
 
 instance = Etl()
 instance.main('nyt2.json')
 
-test = Etl()
-test.extract()
-test.remove_data_types()
-test.transform_data()
-test.json_to_csv()
-test.load_csv()
