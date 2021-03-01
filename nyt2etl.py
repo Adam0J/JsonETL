@@ -64,17 +64,12 @@ class Etl:
 
         pass
 
-<<<<<<< HEAD
-    def main(self):
-
-=======
 
     def main(self, old_file_name):
         self.json_file = old_file_name
         self.extract()
         self.remove_data_types()
         self.remove_bestseller_column()
->>>>>>> 61f65afc8c9848aba66478806decf5f455c92b08
         pass
 
 
