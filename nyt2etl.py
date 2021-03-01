@@ -66,21 +66,24 @@ class Etl:
         return self.new_columns
 
     def json_to_csv(self):
+        for x in self.read_json[0].keys():
+            self.csv_format[0].append(x)
 
+        for dictionary in self.read_json:
+            self.csv_format.append(list(dictionary.values))
         return self.csv_format
 
     def load_csv(self):
 
         pass
 
-
     def main(self, old_file_name):
         self.json_file = old_file_name
         self.extract()
         self.remove_data_types()
+        self.transform_data()
         self.remove_bestseller_column()
-         self.change_data_format()
-
+        self.change_data_format()
 
 
 
