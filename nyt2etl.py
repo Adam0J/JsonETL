@@ -62,20 +62,21 @@ class Etl:
         return self.new_columns
 
     def json_to_csv(self):
-        for x in self.read_json[0].keys():
+        for x in self.new_columns[0].keys():
             self.csv_format[0].append(x)
 
-        for dictionary in self.read_json:
+        for dictionary in self.new_columns:
             self.csv_format.append(list(dictionary.values()))
         return self.csv_format
 
     def load_csv(self):
-        with open(self.new_csv_file, "w", newline="", encoding='utf-8') as new_file:
-            csv_writer = csv.writer(new_file)
+        with open(self.new_csv_file, "w", newline="", encoding='utf-8') as new_csv_file:
+            csv_writer = csv.writer(new_csv_file)
             csv_writer.writerows(self.csv_format)
 
     def main(self, old_file_name, new_csv_file_name):
         self.json_file = old_file_name
+        self.new_csv_file = new_csv_file_name
         self.extract()
         self.remove_data_types()
         self.transform_data()
@@ -88,3 +89,4 @@ class Etl:
 instance = Etl()
 instance.main('nyt2.json', 'csv_from_json')
 
+# all good :)
