@@ -1,14 +1,16 @@
 import csv
 import json
+from datetime import datetime
 
 
 class Etl:
     def __init__(self):
-        self.json_file = ''
-        self.new_csv_file = ''
+        self.json_file = "nyt2.json"
+        self.new_csv_file = 'nyt2.csv'
         self.read_json = []
         self.new_columns = ''
         self.csv_format = [[]]
+        self.datetime = ''
 
     def extract(self):
         with open(self.json_file, encoding='utf-8') as file:
@@ -18,7 +20,7 @@ class Etl:
 
     def remove_data_types(self):
         keys = list(self.read_json[0].keys())
-        print(keys)
+
         for dictionary in self.read_json:
             for key in keys:
                 values = dictionary[key]
@@ -29,12 +31,11 @@ class Etl:
                         dictionary[key] = values
                     else:
                         dictionary[key] = values
+
         return self.read_json
 
-        # need to return as specific data types - int, float, date
-
-# if dictionary == dictionary['price']:
-#     value = int(value)
+    # if dictionary == dictionary['price']:
+    #     value = int(value)
 
     def transform_data(self):
         for dictionary in self.read_json:
@@ -53,29 +54,44 @@ class Etl:
         return self.new_columns
 
     def change_data_format(self):
-
+        # Iterate through self.new_columns with parameter book
+        for book in self.new_columns:
+            old_format = int(book['published_date'])
+            # Convert old date format into YYYY-mm-DD format
+            date = datetime.fromtimestamp(old_format / 1e3)
+            date = date.strftime("%Y-%m-%d")
+            # Return date into book
+            book['published_date'] = date
         return self.new_columns
 
     def json_to_csv(self):
         for x in self.read_json[0].keys():
             self.csv_format[0].append(x)
-
         for dictionary in self.read_json:
             self.csv_format.append(list(dictionary.values))
+
         return self.csv_format
 
     def load_csv(self):
-
-        pass
+        with open(self.new_csv_file, "w", newline="", encoding='utf-8') as new_file:
+            csv_writer = csv.writer(new_file)
+            csv_writer.writerows(self.csv_format)
 
     def main(self, old_file_name):
         self.json_file = old_file_name
         self.extract()
         self.remove_data_types()
+        self.transform_data()
         self.remove_bestseller_column()
-
-        pass
+        self.change_data_format()
 
 
 instance = Etl()
 instance.main('nyt2.json')
+
+test = Etl()
+test.extract()
+test.remove_data_types()
+test.transform_data()
+test.json_to_csv()
+test.load_csv()
