@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 
 
+
 class Etl:
     def __init__(self):
         self.json_file = ''
@@ -31,6 +32,19 @@ class Etl:
                         dictionary[key] = values
                     else:
                         dictionary[key] = values
+
+        return self.read_json
+
+# if dictionary == dictionary['price']:
+#     value = int(value)
+
+    def transform_data(self):
+        for dictionary in self.read_json:
+            for key in dictionary:
+                if key == 'price':
+                    dictionary[key] = float(dictionary[key])
+                elif key == 'rank' or key == 'rank_last_week' or key == 'weeks_on_list' or key == 'published_date':
+                    dictionary[key] = int(dictionary[key])
         return self.read_json
 
     def remove_bestseller_column(self):
@@ -65,8 +79,9 @@ class Etl:
         self.extract()
         self.remove_data_types()
         self.remove_bestseller_column()
-        print(self.change_data_format())
-        pass
+         self.change_data_format()
+
+
 
 
 instance = Etl()
