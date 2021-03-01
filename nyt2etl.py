@@ -86,15 +86,17 @@ class Etl:
         self.transform_data()
         self.remove_bestseller_column()
         self.change_data_format()
+        self.json_to_csv()
+        self.load_csv()
 
 
 
 instance = Etl()
 instance.main('nyt2.json')
 
-test = Etl()
-test.extract()
-test.remove_data_types()
-test.transform_data()
-test.json_to_csv()
-test.load_csv()
+# test = Etl()
+# test.extract()
+# test.remove_data_types()
+# test.transform_data()
+# test.json_to_csv()
+# test.load_csv()
