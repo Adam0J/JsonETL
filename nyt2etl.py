@@ -6,8 +6,8 @@ from datetime import datetime
 
 class Etl:
     def __init__(self):
-        self.json_file = ''
-        self.new_csv_file = ''
+        self.json_file = "nyt2.json"
+        self.new_csv_file = 'nyt2.csv'
         self.read_json = []
         self.new_columns = ''
         self.csv_format = [[]]
@@ -21,7 +21,7 @@ class Etl:
 
     def remove_data_types(self):
         keys = list(self.read_json[0].keys())
-        print(keys)
+
         for dictionary in self.read_json:
             for key in keys:
                 values = dictionary[key]
@@ -37,6 +37,7 @@ class Etl:
 
 # if dictionary == dictionary['price']:
 #     value = int(value)
+
 
     def transform_data(self):
         for dictionary in self.read_json:
@@ -68,14 +69,15 @@ class Etl:
     def json_to_csv(self):
         for x in self.read_json[0].keys():
             self.csv_format[0].append(x)
-
         for dictionary in self.read_json:
             self.csv_format.append(list(dictionary.values))
+            
         return self.csv_format
 
     def load_csv(self):
-
-        pass
+        with open(self.new_csv_file, "w",newline="", encoding='utf-8') as new_file:
+            csv_writer = csv.writer(new_file)
+            csv_writer.writerows(self.csv_format)
 
     def main(self, old_file_name):
         self.json_file = old_file_name
@@ -90,3 +92,9 @@ class Etl:
 instance = Etl()
 instance.main('nyt2.json')
 
+test = Etl()
+test.extract()
+test.remove_data_types()
+test.transform_data()
+test.json_to_csv()
+test.load_csv()
