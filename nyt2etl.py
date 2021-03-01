@@ -32,6 +32,20 @@ class Etl:
                         dictionary[key] = values
         return self.read_json
 
+        # need to return as specific data types - int, float, date
+
+# if dictionary == dictionary['price']:
+#     value = int(value)
+
+    def transform_data(self):
+        for dictionary in self.read_json:
+            for key in dictionary:
+                if key == 'price':
+                    dictionary[key] = float(dictionary[key])
+                elif key == 'rank' or key == 'rank_last_week' or key == 'weeks_on_list' or key == 'published_date':
+                    dictionary[key] = int(dictionary[key])
+        return self.read_json
+
     def remove_bestseller_column(self):
 
         return self.new_columns
@@ -49,7 +63,5 @@ class Etl:
         pass
 
     def main(self):
-        e = Etl()
-        e.extract()
-        e.remove_data_types()
+
         pass
