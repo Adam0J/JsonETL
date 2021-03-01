@@ -73,13 +73,12 @@ class Etl:
 
         pass
 
-
     def main(self, old_file_name):
         self.json_file = old_file_name
         self.extract()
         self.remove_data_types()
         self.remove_bestseller_column()
-         self.change_data_format()
+        self.change_data_format()
 
 
 
