@@ -6,13 +6,8 @@ from datetime import datetime
 
 class Etl:
     def __init__(self):
-<<<<<<< HEAD
-        self.json_file = "nyt2.json"
-        self.new_csv_file = 'nyt2.csv'
-=======
         self.json_file = ""
         self.new_csv_file = ''
->>>>>>> 6e53ef67c4e05f7bfcd61baac15278dfca42e466
         self.read_json = []
         self.new_columns = ''
         self.csv_format = [[]]
@@ -74,9 +69,9 @@ class Etl:
     def json_to_csv(self):
         for x in self.read_json[0].keys():
             self.csv_format[0].append(x)
+
         for dictionary in self.read_json:
-            self.csv_format.append(list(dictionary.values))
-            
+            self.csv_format.append(list(dictionary.values()))
         return self.csv_format
 
     def load_csv(self):
@@ -84,11 +79,8 @@ class Etl:
             csv_writer = csv.writer(new_file)
             csv_writer.writerows(self.csv_format)
 
-<<<<<<< HEAD
-    def main(self, old_file_name):
-=======
+
     def main(self, old_file_name, new_csv_file_name):
->>>>>>> 6e53ef67c4e05f7bfcd61baac15278dfca42e466
         self.json_file = old_file_name
         self.new_csv_file = new_csv_file_name
         self.extract()
@@ -96,15 +88,11 @@ class Etl:
         self.transform_data()
         self.remove_bestseller_column()
         self.change_data_format()
-<<<<<<< HEAD
-=======
         self.json_to_csv()
         self.load_csv()
->>>>>>> 6e53ef67c4e05f7bfcd61baac15278dfca42e466
-
 
 
 instance = Etl()
-instance.main('nyt2.json')
+instance.main('nyt2.json', 'new_csv_file.csv')
 
 
