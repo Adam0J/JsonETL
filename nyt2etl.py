@@ -107,12 +107,4 @@ class Etl:
 instance = Etl()
 instance.main('nyt2.json')
 
-<<<<<<< HEAD
-# test = Etl()
-# test.extract()
-# test.remove_data_types()
-# test.transform_data()
-# test.json_to_csv()
-# test.load_csv()
-=======
->>>>>>> be89bc9108971f664d179771c363e1a7bc669e2a
+
