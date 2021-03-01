@@ -1,4 +1,5 @@
 import csv, json
+from datetime import datetime
 
 
 class Etl:
@@ -27,6 +28,9 @@ class Etl:
         return self.new_columns
 
     def change_data_format(self):
+
+        for book in self.new_columns:
+
 
         return self.new_columns
 
